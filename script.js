@@ -1,43 +1,14 @@
-const canvas = document.getElementById('game');
+import { Bird } from "./bird.js";
+
+export const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+export const gameState = {
+    state: ""
+};
 
-function Bird(x, y, velocity, jumpForce, gravity, radius) {
-    this.x = x;
-    this.y = y;
-    this.velocity = velocity;
-    this.jumpForce = jumpForce;
-    this.gravity = gravity;
-    this.radius = radius;
-
-    this.drawBird = () => {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'orange';
-        ctx.fill();
-        ctx.closePath();
-    }
-
-    this.updateBird = () => { 
-        this.velocity += this.gravity;
-        this.y += this.velocity;
-        
-        this.jump();
-        this.drawBird();
-    }
-
-    this.jump = () => {
-        document.addEventListener('keydown', (e) => {
-            if(e.key.includes(' ')) {
-                this.velocity = this.jumpForce;
-                e.preventDefault();
-            }
-
-        })
-    }
-}
+canvas.width = 1200;
+canvas.height = 800;
 
 var bird;
 
@@ -45,7 +16,7 @@ function main() {
     ctx.fillStyle = "gray";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    bird = new Bird(canvas.width / 2, canvas.height / 2, 0, -8, 0.5, 20);
+    bird = new Bird(ctx, canvas.width / 2, canvas.height / 2, 0, -8, 0.5, 20);
 }
 
 function loop() {
