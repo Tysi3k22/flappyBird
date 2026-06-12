@@ -1,4 +1,4 @@
-import {gameState, canvas} from './script.js';
+import {gameState, canvas} from './main.js';
 
 export function Bird(ctx, x, y, velocity, jumpForce, gravity, radius) {
     this.ctx = ctx;

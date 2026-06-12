@@ -1,4 +1,4 @@
-import { gameState, score } from "./script.js";
+import { gameState, score, addToScore } from "./main.js";
 
 export function collision(bird, pilar) {
     pilar.active.forEach(p => {
@@ -17,7 +17,7 @@ export function collision(bird, pilar) {
 
         if (!p.passed && birdX > p.x + 30) {
             p.passed = true;
-            score++;
+            addToScore();
         }
     });
 }

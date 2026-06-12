@@ -1,4 +1,4 @@
-import { gameState, canvas, ctx } from "./script.js";
+import { gameState, canvas, ctx, resetScore } from "./main.js";
 
 export function Pillar(pillars, gap, bird) {
     this.pillars = pillars;
@@ -48,6 +48,7 @@ export function Pillar(pillars, gap, bird) {
         document.addEventListener('keydown', (e) => {
             if (e.key === ' ' && gameState.state === "gameOver") {
                 e.preventDefault();
+                resetScore();
                 gameState.state = '';
                 this.active = [];
                 this.spawnPillar();
