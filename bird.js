@@ -18,7 +18,7 @@ export function Bird(ctx, x, y, velocity, jumpForce, gravity, radius) {
     }
 
     this.updateBird = () => { 
-        if(this.y + this.radius > canvas.height) {
+        if(this.y + this.radius > canvas.height || this.y + this.radius <= 0) {
             gameState.state = "gameOver";
             this.velocity = 0;
             this.gravity = 0;

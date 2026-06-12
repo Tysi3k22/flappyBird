@@ -7,30 +7,49 @@ canvas.width = 1200;
 canvas.height = 800;
 
 const pillar = [
-    {x: 0, y: 100},
-    {x: 0, y: 200},
-    {x: 0, y: 300},
-    {x: 0, y: 600},
-    {x: 0, y: 400}
+    {x: canvas.width, y: 100},
+    {x: canvas.width, y: 200},
+    {x: canvas.width, y: 300},
+    {x: canvas.width, y: 600},
+    {x: canvas.width, y: 400}
 ]
 
 function Pillar(pillars, gap) {
     this.pillars = pillars;
     this.gap = gap;
+    this.active = [];
 
-    this.drawPillar = (index) => {
+    this.spawnPillar = () => {
+        const random = this.pillars[Math.floor(Math.random() * this.pillars.length)];
+        this.active.push({ x: canvas.width, y: random.y, spawned: false });
+    };
+
+    this.drawPillar = (pillar) => {
         ctx.beginPath();
-        ctx.rect(this.pillars[index].x, 0, 30, this.pillars[index].y - this.gap)
-        ctx.rect(this.pillars[index].x, this.pillars[index].y + gap, 30, canvas.height - this.pillars[index].y - this.gap)
+        ctx.rect(pillar.x, 0, 30, pillar.y - this.gap);
+        ctx.rect(pillar.x, pillar.y + this.gap, 30, canvas.height);
         ctx.fillStyle = 'orange';
         ctx.fill();
         ctx.closePath();
-    }
+    };
 
-    this.drawRandomPillars = () => {
+    this.updatePillars = () => {
+        this.active.forEach(p => {
+            p.x -= 2;
+            this.drawPillar(p);
 
-    }
-}
+            if (p.x + 30 < canvas.width / 2 && !p.spawned) {
+                p.spawned = true;
+                this.spawnPillar();
+            }
+        });
+
+        this.active = this.active.filter(p => p.x + 30 > 0);
+    };
+    
+
+    this.spawnPillar();
+}  
 
 export const gameState = {
     state: ""
@@ -38,14 +57,17 @@ export const gameState = {
 
 var bird;
 var pilar;
+var randomIndex;
 
 function main() {
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    bird = new Bird(ctx, canvas.width / 2, canvas.height / 2, 0, -8, 0.5, 20);
-    pilar = new Pillar(pillar, 80);    
+    
+    bird = new Bird(ctx, 600, canvas.height / 2, 0, -8, 0.5, 20);
+    pilar = new Pillar(pillar, 80);  
 }
+
+
 
 function loop() {
     requestAnimationFrame(loop);
@@ -53,7 +75,7 @@ function loop() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     bird.updateBird();
-    pilar.drawPillar(4);
+    pilar.updatePillars();
 }
 
 main();
