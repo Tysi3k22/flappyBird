@@ -3,6 +3,10 @@ import { Bird } from "./bird.js";
 export const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
+export const gameState = {
+    state: ""
+};
+
 canvas.width = 1200;
 canvas.height = 800;
 
@@ -34,6 +38,10 @@ function Pillar(pillars, gap) {
     };
 
     this.updatePillars = () => {
+        if(gameState.state === "gameOver") {
+            this.stopPillars();
+            return;
+        }
         this.active.forEach(p => {
             p.x -= 2;
             this.drawPillar(p);
@@ -47,13 +55,28 @@ function Pillar(pillars, gap) {
         this.active = this.active.filter(p => p.x + 30 > 0);
     };
     
+    this.stopPillars = () => {
+        this.active.forEach(p => {
+            p.x = p.x;
+            this.drawPillar(p);
+        })
+    }
+
+    this.resetMap = () => {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' && gameState.state === "gameOver") {
+                e.preventDefault();
+                gameState.state = '';
+                this.active = [];
+                this.spawnPillar();
+                bird.reset();
+            }
+        });
+    }
 
     this.spawnPillar();
+    this.resetMap();
 }  
-
-export const gameState = {
-    state: ""
-};
 
 var bird;
 var pilar;
