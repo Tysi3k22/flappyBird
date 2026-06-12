@@ -1,5 +1,8 @@
 import {gameState, canvas} from './main.js';
 
+let flappyBird = new Image()
+flappyBird.src = './assets/flappybird.png'
+
 export function Bird(ctx, x, y, velocity, jumpForce, gravity, radius) {
     this.ctx = ctx;
     this.x = x; 
@@ -19,9 +22,10 @@ export function Bird(ctx, x, y, velocity, jumpForce, gravity, radius) {
 
     this.drawBird = () => {
         ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-        ctx.fillStyle = 'orange';
-        ctx.fill();
+        ctx.drawImage(flappyBird, this.x, this.y, this.radius, this.radius)
+        // ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
+        // ctx.fillStyle = 'orange';
+        // ctx.fill();
         ctx.closePath();
     }
 

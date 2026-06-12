@@ -1,5 +1,10 @@
 import { gameState, canvas, ctx, resetScore } from "./main.js";
 
+let pillar_bottom = new Image();
+pillar_bottom.src = './assets/bottompipe.png';
+let pillar_top = new Image();
+pillar_top.src = './assets/toppipe.png';
+
 export function Pillar(pillars, gap, bird) {
     this.pillars = pillars;
     this.gap = gap;
@@ -11,12 +16,8 @@ export function Pillar(pillars, gap, bird) {
     };
 
     this.drawPillar = (pillar) => {
-        ctx.beginPath();
-        ctx.rect(pillar.x, 0, 30, pillar.y - this.gap);
-        ctx.rect(pillar.x, pillar.y + this.gap, 30, canvas.height);
-        ctx.fillStyle = 'blue';
-        ctx.fill();
-        ctx.closePath();
+        ctx.drawImage(pillar_bottom, pillar.x, pillar.y + this.gap, 30, canvas.height)
+        ctx.drawImage(pillar_top, pillar.x, 0, 30, pillar.y - this.gap)
     };
 
     this.updatePillars = () => {
@@ -28,7 +29,7 @@ export function Pillar(pillars, gap, bird) {
             p.x -= 2;
             this.drawPillar(p);
 
-            if (p.x + 30 < canvas.width / 2 && !p.spawned) {
+            if (p.x + 35 < canvas.width / 2 && !p.spawned) {
                 p.spawned = true;
                 this.spawnPillar();
             }

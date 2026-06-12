@@ -5,6 +5,9 @@ import { collision } from "./collision.js";
 export const canvas = document.getElementById('game');
 export const ctx = canvas.getContext('2d');
 
+canvas.width = 360;
+canvas.height = 640;
+
 export const gameState = {
     state: ""
 };
@@ -19,13 +22,20 @@ export function resetScore() {
     score = 0;
 }
 
-const pillar = [
-    {x: canvas.width, y: 100},
-    {x: canvas.width, y: 200},
-    {x: canvas.width, y: 300},
-    {x: canvas.width, y: 600},
-    {x: canvas.width, y: 400}
-]
+const pillar = []
+
+function fillPilars() {
+    let y = 100;
+
+    while(y < canvas.height - 100) {
+        y += 25;
+
+        pillar.push({x: canvas.width, y: y});
+    }
+}
+
+console.log(pillar)
+fillPilars();
 
 function updateScore() {
     ctx.font = "30px Arial";
@@ -33,16 +43,15 @@ function updateScore() {
     ctx.textAlign = "center";
     ctx.textBaseline = "top";
 
-    ctx.fillText(score, 600, 50);
+    ctx.fillText(score, canvas.width / 2, 50);
 }
-canvas.width = 1200;
-canvas.height = 800;
+
  
 var bird;
 var pilar;
 
 function main() {
-    bird = new Bird(ctx, 600, canvas.height / 2, 0, -8, 0.5, 20);
+    bird = new Bird(ctx, canvas.width / 2, canvas.height / 2, 0, -6, 0.4, 30);
     pilar = new Pillar(pillar, 80, bird);  
 }
 

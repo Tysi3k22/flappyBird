@@ -1,11 +1,29 @@
-body {
-    background: #000;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-canvas {
+.main {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: #ffffff;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: url('./assets/flappybirdbg.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    filter: blur(20px);
+}
+
+canvas {
+    border: 1px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-image: url('./assets/flappybirdbg.png');
 }
