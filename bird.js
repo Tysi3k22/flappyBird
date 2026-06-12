@@ -9,6 +9,14 @@ export function Bird(ctx, x, y, velocity, jumpForce, gravity, radius) {
     this.gravity = gravity;
     this.radius = radius;
 
+    this.getX = () => {
+        return this.x;
+    }
+
+    this.getY = () => {
+        return this.y;
+    }
+
     this.drawBird = () => {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
